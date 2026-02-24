@@ -18,6 +18,7 @@ export interface ConnectorConfig {
         claude: AgentConfig;
         gemini: AgentConfig;
         codex: AgentConfig;
+        opencode: AgentConfig;
     };
     defaults: {
         agent: string;
@@ -33,6 +34,7 @@ const DEFAULT_CONFIG: ConnectorConfig = {
         claude: { enabled: true, command: 'claude' },
         gemini: { enabled: true, command: 'gemini' },
         codex: { enabled: true, command: 'codex' },
+        opencode: { enabled: true, command: 'opencode' },
     },
     defaults: {
         agent: 'claude',

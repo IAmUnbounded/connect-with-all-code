@@ -69,6 +69,7 @@ export function getHelpText(): string {
         '`/claude` or `/cc` — Send to Claude Code',
         '`/gemini` or `/gm` — Send to Gemini CLI',
         '`/codex` or `/cx` — Send to Codex',
+        '`/opencode` or `/oc` — Send to opencode',
         '',
         '*System Commands:*',
         '`/status` — Show agent connectivity status',

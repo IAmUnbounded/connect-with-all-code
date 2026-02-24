@@ -9,6 +9,7 @@ import { AgentRunner } from './agents/base';
 import { ClaudeCodeRunner } from './agents/claude';
 import { GeminiRunner } from './agents/gemini';
 import { CodexRunner } from './agents/codex';
+import { OpencodeRunner } from './agents/opencode';
 
 const logger = pino({
     name: 'cwac-connector',
@@ -59,6 +60,12 @@ async function main(): Promise<void> {
         const command = config.agents.codex.command || 'codex';
         runners.set(AgentType.CODEX, new CodexRunner(command));
         logger.info('📦 Codex agent: enabled');
+    }
+
+    if (config.agents.opencode.enabled) {
+        const command = config.agents.opencode.command || 'opencode';
+        runners.set(AgentType.OPENCODE, new OpencodeRunner(command));
+        logger.info('📦 opencode agent: enabled');
     }
 
     if (runners.size === 0) {

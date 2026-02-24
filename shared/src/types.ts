@@ -4,6 +4,7 @@ export enum AgentType {
     CLAUDE = 'claude',
     GEMINI = 'gemini',
     CODEX = 'codex',
+    OPENCODE = 'opencode',
 }
 
 export const AGENT_ALIASES: Record<string, AgentType> = {
@@ -13,12 +14,15 @@ export const AGENT_ALIASES: Record<string, AgentType> = {
     '/gm': AgentType.GEMINI,
     '/codex': AgentType.CODEX,
     '/cx': AgentType.CODEX,
+    '/opencode': AgentType.OPENCODE,
+    '/oc': AgentType.OPENCODE,
 };
 
 export const AGENT_DISPLAY_NAMES: Record<AgentType, string> = {
     [AgentType.CLAUDE]: 'Claude Code',
     [AgentType.GEMINI]: 'Gemini CLI',
     [AgentType.CODEX]: 'Codex',
+    [AgentType.OPENCODE]: 'opencode',
 };
 
 export const SYSTEM_COMMANDS = [

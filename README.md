@@ -69,9 +69,9 @@ npm run dev:connector -- --pair ABCD-1234
 | Command | Description |
 |---|---|
 | `/claude <prompt>` or `/cc <prompt>` | Send to Claude Code |
-| `/anti <prompt>` or `/ag <prompt>` | Send to Antigravity |
-| `/cursor <prompt>` or `/cu <prompt>` | Send to Cursor |
-| `/wind <prompt>` or `/ws <prompt>` | Send to Windsurf |
+| `/gemini <prompt>` or `/gm <prompt>` | Send to Gemini CLI |
+| `/codex <prompt>` or `/cx <prompt>` | Send to Codex |
+| `/opencode <prompt>` or `/oc <prompt>` | Send to opencode |
 | `/status` | Show agent availability |
 | `/default <agent> [workspace]` | Set default agent |
 | `/history` | Show recent tasks |
