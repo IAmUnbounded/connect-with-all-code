@@ -22,6 +22,7 @@ let reconnectAttempts = 0;
 
 interface WhatsAppBaileysConfig {
     authStorePath?: string;
+    allowlist?: string[];
 }
 
 /**
@@ -30,6 +31,7 @@ interface WhatsAppBaileysConfig {
  */
 export async function initWhatsApp(cfg: WhatsAppBaileysConfig = {}): Promise<void> {
     const authPath = cfg.authStorePath || path.join(process.cwd(), 'auth_store');
+    const allowlist = cfg.allowlist ?? [];
 
     const { state, saveCreds } = await useMultiFileAuthState(authPath);
 
@@ -120,22 +122,28 @@ export async function initWhatsApp(cfg: WhatsAppBaileysConfig = {}): Promise<voi
 
             if (!text) continue;
 
-            const from = msg.key.remoteJid;
-            if (!from) continue;
+            // Strip any JID suffix to get pure identifier
+            const from = msg.key.remoteJid!;
 
             // Skip group messages
             if (from.endsWith('@g.us')) continue;
 
-            // Strip @s.whatsapp.net suffix to get pure phone number
-            const phoneNumber = from.replace('@s.whatsapp.net', '');
+            // Extract the number/identifier before the @ sign
+            const senderId = from.split('@')[0];
 
-            logger.info({ from: phoneNumber, text: text.substring(0, 100) }, 'Inbound message received');
+            // Reject messages from numbers not in the allowlist
+            if (allowlist.length > 0 && !allowlist.includes(senderId) && !allowlist.includes(from)) {
+                logger.warn({ from, senderId }, 'Ignoring message from non-allowlisted number');
+                continue;
+            }
+
+            logger.info({ from, senderId, text: text.substring(0, 100) }, 'Inbound message received');
 
             if (inboundHandler) {
                 try {
-                    inboundHandler(phoneNumber, text);
+                    inboundHandler(from, text);
                 } catch (err: any) {
-                    logger.error({ err: err.message, from: phoneNumber }, 'Error in inbound handler');
+                    logger.error({ err: err.message, from }, 'Error in inbound handler');
                 }
             }
         }

@@ -63,7 +63,7 @@ export class CodexRunner implements AgentRunner {
             logger.info({ taskId, workspace: resolvedWorkspace, promptLength: prompt.length }, 'Executing Codex task');
 
             // Codex CLI: `exec` for non-interactive, prompt via stdin
-            const args = ['exec', '--skip-git-repo-check'];
+            const args = ['exec', '--skip-git-repo-check', '--full-auto'];
 
             const output = await this.runCommand(
                 [this.command, ...args],

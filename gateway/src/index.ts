@@ -22,6 +22,9 @@ const logger = pino({
 
 const PORT = parseInt(process.env.PORT || '3000', 10);
 const AUTH_STORE_PATH = process.env.AUTH_STORE_PATH || undefined;
+const ALLOWLIST_NUMBERS = process.env.ALLOWLIST_NUMBERS
+    ? process.env.ALLOWLIST_NUMBERS.split(',').map((n) => n.trim()).filter(Boolean)
+    : [];
 
 // ─── Express App (health check + WebSocket upgrade) ───
 
@@ -42,7 +45,7 @@ initWsServer(server);
 
 (async () => {
     try {
-        await initWhatsApp({ authStorePath: AUTH_STORE_PATH });
+        await initWhatsApp({ authStorePath: AUTH_STORE_PATH, allowlist: ALLOWLIST_NUMBERS });
 
         // Wire inbound WhatsApp messages → command router
         onInboundMessage((from, text) => {
